@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { syncTodos, deleteTodo, getTodos, selectIsLoading, selectTodosList } from '../redux/todo';
+import { deleteTodo, getTodos, selectIsLoading, selectTodosList } from '../redux/todo';
 
 export default function ListTodos() {
-  //   const [todos, setTodos] = useState([]);
   const todosList = useSelector(selectTodosList);
   const isLoading = useSelector(selectIsLoading);
   const dispatch = useDispatch();

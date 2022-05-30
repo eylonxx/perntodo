@@ -8,7 +8,7 @@ const getTodos = createAsyncThunk('getTodos', async () => {
 });
 
 const deleteTodo = createAsyncThunk('deleteTodo', async (id) => {
-  const todoToDelete = await fetch(`http://localhost:5000/todos/${id}`, {
+  await fetch(`http://localhost:5000/todos/${id}`, {
     method: 'DELETE',
   });
   return id;
@@ -16,7 +16,7 @@ const deleteTodo = createAsyncThunk('deleteTodo', async (id) => {
 
 const createTodo = createAsyncThunk('createTodo', async (todo) => {
   let newTodo;
-  const res = await fetch('http://localhost:5000/todos', {
+  await fetch('http://localhost:5000/todos', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(todo),
