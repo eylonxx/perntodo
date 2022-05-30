@@ -35,8 +35,10 @@ export default function ListTodos() {
         <ul>
           {todosList.map((todo) => (
             <li key={todo.todo_id}>
-              <p>{todo.description}</p>
-              <button onClick={() => handleDelete(todo.todo_id)}>X</button>
+              <span>{todo.description}</span>
+              <button className="btn btn-primary" onClick={() => handleDelete(todo.todo_id)}>
+                X
+              </button>
             </li>
           ))}
         </ul>
