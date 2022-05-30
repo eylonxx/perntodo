@@ -1,18 +1,17 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { createTodo } from '../redux/todo';
 
 export default function InputTodo() {
   const [description, setDescription] = useState('');
+  const dispatch = useDispatch();
 
   const submitForm = async (e) => {
     e.preventDefault();
     try {
       const body = { description };
-      const res = await fetch('http://localhost:5000/todos', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body),
-      });
-      console.log(res);
+      dispatch(createTodo(body));
+      setDescription('');
     } catch (error) {
       console.log(error);
     }

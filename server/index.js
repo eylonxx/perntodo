@@ -13,8 +13,12 @@ app.use(express.json());
 app.post('/todos', async (req, res) => {
   try {
     const { description } = req.body;
-    const newTodo = await pool.query('INSERT INTO todos (description) VALUES($1)', [description]);
-    res.json(newTodo);
+    const newTodo = await pool
+      .query('INSERT INTO todos (description) VALUES($1) RETURNING *', [description])
+      .then((qres) => {
+        res.json(qres.rows[0]);
+      })
+      .catch((e) => console.log(e));
   } catch (err) {
     console.error(err.message);
   }

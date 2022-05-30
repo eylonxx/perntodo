@@ -1,25 +1,47 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { syncTodos, deleteTodo, getTodos, selectIsLoading, selectTodosList } from '../redux/todo';
 
 export default function ListTodos() {
-  const [todos, setTodos] = useState([]);
+  //   const [todos, setTodos] = useState([]);
+  const todosList = useSelector(selectTodosList);
+  const isLoading = useSelector(selectIsLoading);
+  const dispatch = useDispatch();
 
-  const getTodos = async () => {
-    const res = await fetch('http://localhost:5000/todos');
-    const jsonData = await res.json();
-    setTodos(jsonData.rows);
+  const handleGetTodos = async () => {
+    try {
+      dispatch(getTodos());
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      dispatch(deleteTodo(id));
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
-    getTodos();
+    handleGetTodos();
   }, []);
 
   return (
     <div>
-      <ul>
-        {todos.map((todo) => (
-          <li>{todo.description}</li>
-        ))}
-      </ul>
+      {isLoading ? (
+        'loading'
+      ) : (
+        <ul>
+          {todosList.map((todo) => (
+            <li key={todo.todo_id}>
+              <p>{todo.description}</p>
+              <button onClick={() => handleDelete(todo.todo_id)}>X</button>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }
