@@ -14,7 +14,6 @@ app.post('/todos', async (req, res) => {
   try {
     const { description } = req.body;
     const newTodo = await pool.query('INSERT INTO todos (description) VALUES($1)', [description]);
-
     res.json(newTodo);
   } catch (err) {
     console.error(err.message);
